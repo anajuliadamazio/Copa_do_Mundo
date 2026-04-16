@@ -15,10 +15,10 @@
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md border-t-8 border-yellow-400">
         <div class="flex justify-between items-center mb-6 border-b pb-2">
             <h2 class="text-2xl font-bold text-fifa-green">Cadastrar Seleção</h2>
-            <a href="/public/index.php" class="text-sm text-gray-500 hover:text-gray-800">⬅ Voltar</a>
+            <a href="index.php" class="text-sm text-gray-500 hover:text-gray-800">⬅ Voltar</a>
         </div>
         
-        <form method="POST" action="/public/index.php?acao=salvar" class="space-y-4">
+        <form method="POST" action="index.php?acao=salvar" class="space-y-4">
             <div>
                 <label class="block text-sm font-semibold mb-1">Nome da Seleção</label>
                 <input type="text" name="nome" required placeholder="Ex: Brasil" 

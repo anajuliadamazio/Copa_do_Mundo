@@ -14,18 +14,16 @@
 <body class="bg-verde-escuro font-sans text-gray-800">
 
     <div class="container mx-auto p-6 max-w-5xl">
-        
         <header class="mb-8 text-center bg-white p-6 rounded-lg shadow-md border-t-8 border-yellow-400">
             <h1 class="text-4xl font-bold text-fifa-green mb-2">🏆 FIFA World Cup</h1>
             <p class="text-gray-600">Sistema de Gerenciamento de Seleções</p>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
             <div class="bg-white p-6 rounded-lg shadow-md md:col-span-1 h-fit">
                 <h2 id="titulo-form" class="text-xl font-bold mb-4 border-b pb-2">Cadastrar Seleção</h2>
                 
-                <form id="form-selecao" method="POST" action="" class="space-y-4">
+                <form id="form-selecao" method="POST" action="index.php?acao=salvar" class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold mb-1">Nome da Seleção</label>
                         <input type="text" id="nome" name="nome" required placeholder="Ex: Brasil" 
@@ -69,11 +67,8 @@
                         </tr>
                     </thead>
                     <tbody id="tabela-corpo">
-                        
                         <?php 
-                        // Verifica se existe algum resultado vindo da base de dados
                         if (isset($resultado) && $resultado->rowCount() > 0): 
-                            // O while percorre cada linha retornada
                             while ($row = $resultado->fetch(PDO::FETCH_ASSOC)): 
                         ?>
                             <tr class="hover:bg-gray-50 transition border-b">
@@ -97,11 +92,9 @@
                                 </td>
                             </tr>
                         <?php endif; ?>
-                        
                     </tbody>
                 </table>
             </div>
-            
         </div>
     </div>
 </body>

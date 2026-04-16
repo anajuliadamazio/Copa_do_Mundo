@@ -1,48 +1,46 @@
 <?php
 class Selecao {
-    // Conexão com o banco de dados e o nome da tabela
     private $conn;
     private $table_name = "selecoes";
 
-    // Propriedades da seleção (são as colunas que você criou no MySQL)
     public $id;
     public $nome;
     public $grupo;
     public $titulos;
     public $criado_em;
 
-    // Construtor: Quando criarmos a seleção, passamos a conexão do banco para ela [cite: 77]
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    // =======================================================
-    // ESPAÇO ONDE VAMOS COLOCAR A LÓGICA DO BANCO MAIS TARDE
-    // =======================================================
-
-    // Função para Ler Todas as Seleções (Read) [cite: 78]
     public function read() {
-        // A lógica do SQL virá aqui depois
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY criado_em DESC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
     }
 
-    // Função para Criar uma Seleção (Create) [cite: 78]
     public function create() {
-        // A lógica do SQL virá aqui depois
-    }
+        $query = "INSERT INTO " . $this->table_name . " (nome, grupo, titulos) VALUES (:nome, :grupo, :titulos)";
+        $stmt = $this->conn->prepare($query);
 
-    // Função para Ler Apenas Uma Seleção (Read One) [cite: 79]
-    public function readOne() {
-        // A lógica do SQL virá aqui depois
-    }
+        $this->nome = htmlspecialchars(strip_tags($this->nome));
+        $this->grupo = htmlspecialchars(strip_tags($this->grupo));
+        $this->titulos = htmlspecialchars(strip_tags($this->titulos));
 
-    // Função para Atualizar (Update) [cite: 80]
-    public function update() {
-        // A lógica do SQL virá aqui depois
-    }
+        $stmt->bindParam(":nome", $this->nome);
+        $stmt->bindParam(":grupo", $this->grupo);
+        $stmt->bindParam(":titulos", $this->titulos);
 
-    // Função para Deletar (Delete) [cite: 81]
-    public function delete() {
-        // A lógica do SQL virá aqui depois
+        try {
+            if($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } catch(PDOException $e) {
+            echo "🚨 Erro ao salvar no banco: " . $e->getMessage();
+            die();
+        }
     }
 }
 ?>

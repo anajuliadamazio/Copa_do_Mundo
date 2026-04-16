@@ -15,27 +15,51 @@ class SelecaoController {
     }
 
     // =======================================================
-    // ESPAÇO ONDE VAMOS COLOCAR AS AÇÕES DEPOIS
+    // Ação 1: Mostrar a tela principal com a tabela (READ)
     // =======================================================
-
-    // Ação 1: Mostrar a tela principal com a tabela (Read)
     public function index() {
-        // A lógica virá aqui...
+        // 1. Pede para o Model buscar os dados no banco
+        $resultado = $this->selecao->read();
+        
+        // 2. Carrega a tela (View). A View vai usar a variável $resultado para preencher a tabela!
+        require_once '../views/index.php';
     }
 
-    // Ação 2: Mostrar a tela de criar e salvar no banco (Create)
+    // =======================================================
+    // Ação 2: Salvar no banco o que veio do formulário (CREATE)
+    // =======================================================
     public function create() {
-        // A lógica virá aqui...
+        // Verifica se a requisição é do tipo POST (quando clica em "Salvar Seleção")
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            
+            // Pega os dados do formulário e coloca dentro do Model
+            $this->selecao->nome = $_POST['nome'] ?? '';
+            $this->selecao->grupo = $_POST['grupo'] ?? '';
+            $this->selecao->titulos = $_POST['titulos'] ?? '';
+
+            // Manda o Model executar o INSERT INTO (que fizemos no passo anterior)
+            if ($this->selecao->create()) {
+                // Se deu certo, recarrega a página inicial
+                header("Location: index.php"); 
+                exit();
+            } else {
+                echo "❌ Erro ao cadastrar a seleção.";
+                die();
+            }
+        } else {
+            // Se não for POST, mostra o formulário vazio
+            require_once '../views/create.php';
+        }
     }
 
     // Ação 3: Mostrar a tela de editar e atualizar no banco (Update)
     public function edit() {
-        // A lógica virá aqui...
+        // A lógica do UPDATE virá aqui depois
     }
 
     // Ação 4: Excluir uma seleção (Delete)
     public function delete() {
-        // A lógica virá aqui...
+        // A lógica do DELETE virá aqui depois
     }
 }
 ?>
